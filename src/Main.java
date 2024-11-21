@@ -17,8 +17,9 @@ public class Main {
         JLabel label = new JLabel();
         JTextField textfield = new JTextField();
         JPasswordField passwordfield = new JPasswordField();
-        JButton button = new JButton();
+        JButton button = new JButton("Submit");
         JTextArea textarea = new JTextArea();
+        JButton greetButton = new JButton("Enter Name");
 
         label.setBounds(50, 50, 100, 50);
         label.setText("Test");
@@ -26,12 +27,14 @@ public class Main {
         passwordfield.setBounds(50, 170, 100, 50);
         button.setBounds(50, 230, 100, 50);
         textarea.setBounds(50, 290, 200, 100);
+        greetButton.setBounds(200, 230, 150, 50);
 
         apka.add(label);
         apka.add(textfield);
         apka.add(passwordfield);
         apka.add(button);
         apka.add(textarea);
+        apka.add(greetButton);
 
         // Create a popup menu
         JPopupMenu popupMenu = createPopupMenu();
@@ -49,6 +52,18 @@ public class Main {
                 String text1 = textfield.getText();
                 char[] text2 = passwordfield.getPassword();
                 textarea.setText(text1 + "\n" + new String(text2));
+            }
+        });
+
+        greetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = JOptionPane.showInputDialog(apka, "Jak masz na imię?", "Wprowadź imię: ", JOptionPane.QUESTION_MESSAGE);
+                if (name != null && !name.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(apka, "Witaj, " + name + "!", "Uszanowanko", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(apka, "Błędne dane", "Ostrzeżenie!", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -70,12 +85,12 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 String width = JOptionPane.showInputDialog("Enter width");
                 String height = JOptionPane.showInputDialog("Enter height");
-                int widthf = 0;
-                int heightf = 0;
+                int widthf;
+                int heightf;
                 try {
                     widthf = Integer.parseInt(width);
                     heightf = Integer.parseInt(height);
-                    Component source = (Component) ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
+                    Component source = ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
                     source.setSize(widthf, heightf);
                 } catch (Exception b) {
                     JOptionPane.showMessageDialog(null, "Bad input");
@@ -88,9 +103,9 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 Color color = JColorChooser.showDialog(null, "Choose a color", Color.BLACK);
                 if (color != null) {
-                    Component source = (Component) ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
+                    Component source = ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
                     if (source instanceof JLabel) {
-                        ((JLabel) source).setForeground(color);
+                        (source).setForeground(color);
                     } else {
                         source.setBackground(color);
                     }
@@ -103,19 +118,19 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 String x = JOptionPane.showInputDialog("Enter x position");
                 String y = JOptionPane.showInputDialog("Enter y position");
-                int xf = 0;
-                int yf = 0;
+                int xf;
+                int yf;
                 try {
                     xf = Integer.parseInt(x);
                     yf = Integer.parseInt(y);
-                    Component source = (Component) ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
+                    Component source = ((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker();
                     source.setLocation(new Point(xf, yf));
                 } catch (Exception b) {
                     JOptionPane.showMessageDialog(null, "Bad input");
                 }
             }
         });
-///test
+
         return popupMenu;
     }
 
